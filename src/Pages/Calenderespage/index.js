@@ -19,7 +19,7 @@ import { useParams } from "react-router-dom";
 
 const Calenderespage = () => {
   let { cafeId, roomId } = useParams();
-  const [eventData, setEventData] = useState(event);
+  const [eventData] = useState(event);
   const [todos, setTodos] = useState(eventData);
   const calendarComponentRef = React.createRef();
 
@@ -68,9 +68,6 @@ const Calenderespage = () => {
 
   return (
     <div className="container">
-      <h1>
-        {cafeId} and {roomId}
-      </h1>
       <FullCalendar
         schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         ref={calendarComponentRef}
@@ -84,14 +81,6 @@ const Calenderespage = () => {
           timeGridPlugin,
           resourceTimeGridPlugin,
         ]}
-        // events={[
-        //   {
-        //     title: todos.name,
-        //     start: todos.start,
-        //     end: todos.end,
-        //     allDay: true,
-        //   },
-        // ]}
         events={todos}
         select={handleNew}
         eventLimit={3}

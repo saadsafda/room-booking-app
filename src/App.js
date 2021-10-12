@@ -7,7 +7,6 @@ import HomeLayout from "./Pages/Home";
 import ContentWraper from "./components/ContentWraper";
 import Cafe from "./Pages/Cafe1";
 import Calenderespage from "./Pages/Calenderespage";
-// const HomeLayout = lazy(() => import("./Pages/Home"));
 
 function App() {
   return (

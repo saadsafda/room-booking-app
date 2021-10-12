@@ -35,9 +35,9 @@ const SideBar = () => {
           </Link>
         </li>
 
-        <div className="text-center d-none d-md-inline">
+        {/* <div className="text-center d-none d-md-inline">
           <button className="rounded-circle border-0" id="sidebarToggle" />
-        </div>
+        </div> */}
         {/* Sidebar Message */}
         {/* <div className="sidebar-card d-none d-lg-flex">
           <img
