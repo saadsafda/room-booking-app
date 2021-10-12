@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LoginPage from "./Pages/LoginPage";
+// import RegisterPage from "./Pages/RegisterPage";
+
+import HomeLayout from "./Pages/Home";
+import ContentWraper from "./components/ContentWraper";
+import Cafe from "./Pages/Cafe1";
+import Calenderespage from "./Pages/Calenderespage";
+// const HomeLayout = lazy(() => import("./Pages/Home"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <HomeLayout>
+                <ContentWraper />
+              </HomeLayout>
+            </Route>
+            <Route exact path="/cafe/:cafeId">
+              <HomeLayout>
+                <Cafe />
+              </HomeLayout>
+            </Route>
+            <Route path="/cafe/:cafeId/:roomId">
+              <HomeLayout>
+                <Calenderespage />
+              </HomeLayout>
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            {/* <Route path="/register">
+              <RegisterPage />
+            </Route> */}
+          </Switch>
+        </Router>
+      </Suspense>
+    </>
   );
 }
 
