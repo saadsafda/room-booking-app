@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Cafe1BoxPro = (props) => {
@@ -28,7 +27,7 @@ const Cafe1BoxPro = (props) => {
               </div>
             </div>
           </div>
-          </Link>
+        </Link>
       </div>
     </>
   );

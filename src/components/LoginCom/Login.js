@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -25,7 +25,7 @@ const Login = ({ history }) => {
     if (token) {
       history.push("/");
     }
-     //eslint-disable-next-line
+    //eslint-disable-next-line
   }, []);
 
   return (
