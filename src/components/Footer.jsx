@@ -3,10 +3,10 @@ import React from "react";
 const Footer = () => {
   return (
     <>
-      <footer className="sticky-footer bg-white">
+      <footer className="sticky-footer bg-white foobar">
         <div className="container my-auto">
           <div className="copyright text-center my-auto">
-            <span>Copyright © Your Website 2021</span>
+            <span>Copyright © Room Booking 2021</span>
           </div>
         </div>
       </footer>

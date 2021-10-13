@@ -10,7 +10,7 @@ import Calenderespage from "./Pages/Calenderespage";
 
 function App() {
   return (
-    <>
+    <div id="page-top">
       <Suspense fallback={<div>Loading...</div>}>
         <Router>
           <Switch>
@@ -38,7 +38,7 @@ function App() {
           </Switch>
         </Router>
       </Suspense>
-    </>
+    </div>
   );
 }
 

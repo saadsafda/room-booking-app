@@ -5,7 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimeGridPlugin from "@fullcalendar/resource-timegrid";
-// import { collection,  } from "@firebase/firestore";
+
 import event from "./event";
 import {
   collection,
@@ -34,17 +34,23 @@ const Calenderespage = () => {
     const cafe_id = cafeId;
     const room_id = roomId;
 
-    const collectionRef = collection(db, "todos");
-    const payload = { note, start, end, cafe_id, room_id };
-    const docRef = await addDoc(collectionRef, payload);
-    console.log("The new ID is: " + docRef.id);
+    const collectionRef = collection(db, "events");
+    if (note != null) {
+      const payload = { note, start, end, cafe_id, room_id };
+      const docRef = await addDoc(collectionRef, payload);
+      console.log("The new ID is: " + docRef.id);
+    }
+
+    // if (note === null) {
+    //   prompt("please fill note");
+    // }
   };
 
   useEffect(
     () =>
       onSnapshot(
         query(
-          collection(db, "todos"),
+          collection(db, "events"),
           where("cafe_id", "==", cafeId.trim()),
           where("room_id", "==", roomId.trim())
         ),
@@ -52,8 +58,8 @@ const Calenderespage = () => {
           setTodos(
             snapshot.docs.map((doc) => ({
               // ...doc.data(),
-              cafe_id: doc.data().cafe_id,
-              room_id: doc.data().room_id,
+              // cafe_id: doc.data().cafe_id,
+              // room_id: doc.data().room_id,
               title: doc.data().note,
               start: doc.data().start,
               end: doc.data().end,
@@ -67,12 +73,12 @@ const Calenderespage = () => {
   );
 
   return (
-    <div className="container">
+    <div style={{ margin: "0 20px 20px 20px" }}>
       <FullCalendar
         schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         ref={calendarComponentRef}
-        defaultView="dayGridMonth"
         // dateClick={handleDateClick}
+        defaultView="dayGridMonth"
         displayEventTime={true}
         selectable={true}
         plugins={[
@@ -81,6 +87,9 @@ const Calenderespage = () => {
           timeGridPlugin,
           resourceTimeGridPlugin,
         ]}
+        // eventClick={(event) => {
+        //   alert(event.event._def.publicId);
+        // }}
         events={todos}
         select={handleNew}
         eventLimit={3}
