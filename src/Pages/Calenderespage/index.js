@@ -16,38 +16,69 @@ import {
 } from "firebase/firestore";
 import db from "../../firebase";
 import { useParams } from "react-router-dom";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@material-ui/core";
 
 const Calenderespage = () => {
   let { cafeId, roomId } = useParams();
+  const [open, setOpen] = useState(false);
   const [eventData] = useState(event);
   const [todos, setTodos] = useState(eventData);
+  const [note, setNote] = useState("");
+  const [start, setStart] = useState("");
+  // const [end, setEnd] = useState("");
   const calendarComponentRef = React.createRef();
 
   // const handleDateClick = (arg) => {
   //   alert(arg.dateStr);
   // };
+  const handleNew = async (e) => {
+    e.preventDefault();
+    // const start = info.startStr;
+    // const end = info.endStr;
 
-  const handleNew = async (info) => {
-    const note = prompt("Enter note");
-    const start = info.startStr;
-    const end = info.endStr;
-    const cafe_id = cafeId;
-    const room_id = roomId;
+    // const start = info.startStr;
+    // const end = info.endStr;
+    // const note = prompt("add Event");
+
+    // const cafe_id = cafeId;
+    // const room_id = roomId;
 
     const collectionRef = collection(db, "events");
-    if (note != null) {
-      const payload = { note, start, end, cafe_id, room_id };
+    if (note !== "") {
+      const payload = {
+        note,
+        start,
+        end: new Date(),
+        cafe_id: cafeId,
+        room_id: roomId,
+      };
       const docRef = await addDoc(collectionRef, payload);
       console.log("The new ID is: " + docRef.id);
+      // console.log(info.startStr);
     }
+    setNote("");
+    setStart("");
+    // setEnd("");
+    setOpen(false);
+  };
 
-    // if (note === null) {
-    //   prompt("please fill note");
-    // }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(
-    () =>
+    () => {
       onSnapshot(
         query(
           collection(db, "events"),
@@ -67,16 +98,19 @@ const Calenderespage = () => {
               allDay: true,
             }))
           )
-      ),
+      );
+    },
     //eslint-disable-next-line
     []
   );
 
   return (
     <div style={{ margin: "0 20px 20px 20px" }}>
+      {/* <h1>{addEvent}</h1> */}
       <FullCalendar
-        schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+        // schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         ref={calendarComponentRef}
+        dateClick={handleClickOpen}
         // dateClick={handleDateClick}
         defaultView="dayGridMonth"
         displayEventTime={true}
@@ -94,6 +128,50 @@ const Calenderespage = () => {
         select={handleNew}
         eventLimit={3}
       />
+
+      {/* <Button variant="outlined" onClick={handleClickOpen}>
+        Open form dialog
+      </Button> */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add New Event</DialogTitle>
+        <form onSubmit={handleNew}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              label="Enter your Note"
+              type="name"
+              fullWidth
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              required
+              style={{ marginBottom: "20px" }}
+            />
+            <TextField
+              label="Enter Start Date YYYY-D-MM "
+              type="name"
+              fullWidth
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
+              required
+              style={{ marginBottom: "20px" }}
+            />
+            {/* 
+            <TextField
+              label="Enter End Date mm-yy-dd"
+              type="name"
+              fullWidth
+              value={end}
+              onChange={(e) => setEnd(e.target.value)}
+              required
+              style={{ marginBottom: "20px" }}
+            /> */}
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit">Save</Button>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </div>
   );
 };
