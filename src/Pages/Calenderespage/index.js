@@ -5,6 +5,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimeGridPlugin from "@fullcalendar/resource-timegrid";
+import moment from "moment";
 
 import event from "./event";
 import {
@@ -32,44 +33,34 @@ const Calenderespage = () => {
   const [todos, setTodos] = useState(eventData);
   const [note, setNote] = useState("");
   const [start, setStart] = useState("");
-  // const [end, setEnd] = useState("");
   const calendarComponentRef = React.createRef();
 
   // const handleDateClick = (arg) => {
   //   alert(arg.dateStr);
   // };
-  const handleNew = async (e) => {
-    e.preventDefault();
-    // const start = info.startStr;
-    // const end = info.endStr;
 
-    // const start = info.startStr;
-    // const end = info.endStr;
-    // const note = prompt("add Event");
-
-    // const cafe_id = cafeId;
-    // const room_id = roomId;
-
+  const handleNew = async () => {
     const collectionRef = collection(db, "events");
+
     if (note !== "") {
       const payload = {
         note,
         start,
-        end: new Date(),
+        end: start,
         cafe_id: cafeId,
         room_id: roomId,
       };
       const docRef = await addDoc(collectionRef, payload);
       console.log("The new ID is: " + docRef.id);
-      // console.log(info.startStr);
     }
     setNote("");
     setStart("");
-    // setEnd("");
     setOpen(false);
   };
 
-  const handleClickOpen = () => {
+  const handleSelect = (e) => {
+    setStart(moment(e.start).format("YYYY-MM-DD"));
+    setNote("");
     setOpen(true);
   };
 
@@ -88,9 +79,6 @@ const Calenderespage = () => {
         (snapshot) =>
           setTodos(
             snapshot.docs.map((doc) => ({
-              // ...doc.data(),
-              // cafe_id: doc.data().cafe_id,
-              // room_id: doc.data().room_id,
               title: doc.data().note,
               start: doc.data().start,
               end: doc.data().end,
@@ -106,12 +94,9 @@ const Calenderespage = () => {
 
   return (
     <div style={{ margin: "0 20px 20px 20px" }}>
-      {/* <h1>{addEvent}</h1> */}
       <FullCalendar
-        // schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+        schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         ref={calendarComponentRef}
-        dateClick={handleClickOpen}
-        // dateClick={handleDateClick}
         defaultView="dayGridMonth"
         displayEventTime={true}
         selectable={true}
@@ -121,17 +106,13 @@ const Calenderespage = () => {
           timeGridPlugin,
           resourceTimeGridPlugin,
         ]}
-        // eventClick={(event) => {
-        //   alert(event.event._def.publicId);
-        // }}
+        eventClick={(event) => {
+          alert(event.event._def.title);
+        }}
         events={todos}
-        select={handleNew}
+        select={handleSelect}
         eventLimit={3}
       />
-
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Event</DialogTitle>
         <form onSubmit={handleNew}>
@@ -146,28 +127,9 @@ const Calenderespage = () => {
               required
               style={{ marginBottom: "20px" }}
             />
-            <TextField
-              label="Enter Start Date YYYY-D-MM "
-              type="name"
-              fullWidth
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-              required
-              style={{ marginBottom: "20px" }}
-            />
-            {/* 
-            <TextField
-              label="Enter End Date mm-yy-dd"
-              type="name"
-              fullWidth
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-              required
-              style={{ marginBottom: "20px" }}
-            /> */}
           </DialogContent>
           <DialogActions>
-            <Button type="submit">Save</Button>
+            <Button onClick={handleNew}>Save</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
         </form>
