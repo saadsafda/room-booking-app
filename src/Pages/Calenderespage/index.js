@@ -35,10 +35,6 @@ const Calenderespage = () => {
   const [start, setStart] = useState("");
   const calendarComponentRef = React.createRef();
 
-  // const handleDateClick = (arg) => {
-  //   alert(arg.dateStr);
-  // };
-
   const handleNew = async () => {
     const collectionRef = collection(db, "events");
 
