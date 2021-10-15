@@ -19,13 +19,11 @@ export const handleNew = async () => {
   console.log("The new ID is: " + docRef.id);
 };
 
-// export const handleEdit = async (id) => {
-//   const name = prompt("Enter name");
-//   const start = prompt("Enter start date");
-//   const end = prompt("Enter end date");
-
-//   const docRef = doc(db, "todos", id);
-//   const payload = { name, start, end };
-
-//   setDoc(docRef, payload);
-// };
+export const handleEdit = async (id) => {
+  //   const name = prompt("Enter name");
+  //   const start = prompt("Enter start date");
+  //   const end = prompt("Enter end date");
+  //   const docRef = doc(db, "todos", id);
+  //   const payload = { name, start, end };
+  //   setDoc(docRef, payload);
+};

@@ -14,6 +14,9 @@ import {
   onSnapshot,
   query,
   where,
+  doc,
+  setDoc,
+  // deleteDoc,
 } from "firebase/firestore";
 import db from "../../firebase";
 import { useParams } from "react-router-dom";
@@ -29,9 +32,11 @@ import {
 const Calenderespage = () => {
   let { cafeId, roomId } = useParams();
   const [open, setOpen] = useState(false);
+  // const [EditOrDeletopen, setEditOrDeletopen] = useState(false);
   const [eventData] = useState(event);
   const [todos, setTodos] = useState(eventData);
   const [note, setNote] = useState("");
+  // const [edit, setEdit] = useState("");
   const [start, setStart] = useState("");
   const calendarComponentRef = React.createRef();
 
@@ -54,15 +59,39 @@ const Calenderespage = () => {
     setOpen(false);
   };
 
+  const handleEdit = async (id) => {
+    const note = prompt("Edit Text");
+    const docRef = doc(db, "events", id.event._def.publicId);
+    if (note !== null) {
+      const payload = {
+        note,
+        start: moment(id.event._instance.range.start).format("YYYY-MM-DD"),
+        end: start,
+        cafe_id: cafeId,
+        room_id: roomId,
+      };
+      setDoc(docRef, payload);
+      console.log(payload);
+    }
+  };
+
   const handleSelect = (arg) => {
     setStart(moment(arg.dateStr).format("YYYY-MM-DD"));
     setNote("");
     setOpen(true);
   };
+  // const handleSelectEdit = (arg) => {
+  //   setStart(moment(arg.dateStr).format("YYYY-MM-DD"));
+  //   setNote("");
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
   };
+  // const handleEditOrDeletClose = () => {
+  //   setEditOrDeletopen(false);
+  // };
 
   useEffect(
     () => {
@@ -88,6 +117,10 @@ const Calenderespage = () => {
     []
   );
 
+  // const handleDelete = async (id) => {
+  //   await deleteDoc(doc(db, "events", id.event._def.publicId));
+  // };
+
   return (
     <div style={{ margin: "0 20px 20px 20px" }}>
       <FullCalendar
@@ -102,9 +135,11 @@ const Calenderespage = () => {
           timeGridPlugin,
           resourceTimeGridPlugin,
         ]}
-        eventClick={(event) => {
-          alert(event.event._def.title);
-        }}
+        // eventClick={(event) => {
+        //   alert(event.event._def.title);
+        // }}
+        eventClick={handleEdit}
+        // eventClick={(id) => handleEdit(id)}
         events={todos}
         // select={handleSelect}
         dateClick={handleSelect}
@@ -131,6 +166,27 @@ const Calenderespage = () => {
           </DialogActions>
         </form>
       </Dialog>
+      {/* <Dialog open={EditOrDeletopen} onClose={handleEditOrDeletClose}>
+        <DialogTitle>Add New Event</DialogTitle> */}
+      {/* <form onSubmit={handleEdit}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              label="Enter your Note"
+              type="name"
+              fullWidth
+              value={edit}
+              onChange={(e) => setEdit(e.target.value)}
+              required
+              style={{ marginBottom: "20px" }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleEdit}>Save</Button> */}
+      {/* <Button onClick={() => handleDelete()}>Cancel</Button> */}
+      {/* </DialogActions>
+        </form> */}
+      {/* </Dialog> */}
     </div>
   );
 };
