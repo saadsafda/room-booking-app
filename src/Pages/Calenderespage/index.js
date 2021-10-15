@@ -58,8 +58,8 @@ const Calenderespage = () => {
     setOpen(false);
   };
 
-  const handleSelect = (e) => {
-    setStart(moment(e.start).format("YYYY-MM-DD"));
+  const handleSelect = (arg) => {
+    setStart(moment(arg.dateStr).format("YYYY-MM-DD"));
     setNote("");
     setOpen(true);
   };
@@ -99,7 +99,7 @@ const Calenderespage = () => {
         ref={calendarComponentRef}
         defaultView="dayGridMonth"
         displayEventTime={true}
-        selectable={true}
+        selectable={false}
         plugins={[
           dayGridPlugin,
           interactionPlugin,
@@ -110,7 +110,8 @@ const Calenderespage = () => {
           alert(event.event._def.title);
         }}
         events={todos}
-        select={handleSelect}
+        // select={handleSelect}
+        dateClick={handleSelect}
         eventLimit={3}
       />
       <Dialog open={open} onClose={handleClose}>
@@ -127,25 +128,6 @@ const Calenderespage = () => {
               required
               style={{ marginBottom: "20px" }}
             />
-            {/* <TextField
-              label="Enter Start Date YYYY-D-MM "
-              type="name"
-              fullWidth
-              value={start}
-              onChange={(e) => setStart(e.target.value)}
-              required
-              style={{ marginBottom: "20px" }}
-            /> */}
-            {/* 
-            <TextField
-              label="Enter End Date mm-yy-dd"
-              type="name"
-              fullWidth
-              value={end}
-              onChange={(e) => setEnd(e.target.value)}
-              required
-              style={{ marginBottom: "20px" }}
-            /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleNew}>Save</Button>

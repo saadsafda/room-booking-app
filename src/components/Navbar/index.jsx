@@ -1,6 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import img from "../../img/undraw_profile.svg";
 
 const Navbar = ({ history }) => {
   const logOut = () => {
@@ -53,11 +54,10 @@ const Navbar = ({ history }) => {
               <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                 {user && user.displayName}
               </span>
-              <img
-                className="img-profile rounded-circle"
-                src="img/undraw_profile.svg"
-                alt="..."
-              />
+              <img className="img-profile rounded-circle" src={img} alt="..." />
+              {/* <i
+                class="fa fa-user-circle rounded-circle"
+              ></i> */}
             </a>
             {/* Dropdown - User Information */}
             <div
