@@ -38,38 +38,26 @@ const Calenderespage = () => {
   // const handleDateClick = (arg) => {
   //   alert(arg.dateStr);
   // };
-  const handleNew = async (e) => {
-    e.preventDefault();
-    // const start = info.startStr;
-    // const end = info.endStr;
-
-    // const start = info.startStr;
-    // const end = info.endStr;
-    // const note = prompt("add Event");
-
-    // const cafe_id = cafeId;
-    // const room_id = roomId;
-
+  const handleNew = async () => {
     const collectionRef = collection(db, "events");
     if (note !== "") {
       const payload = {
         note,
         start,
-        end: new Date(),
+        end: start,
         cafe_id: cafeId,
         room_id: roomId,
       };
       const docRef = await addDoc(collectionRef, payload);
-      console.log("The new ID is: " + docRef.id);
-      // console.log(info.startStr);
     }
     setNote("");
     setStart("");
-    // setEnd("");
     setOpen(false);
   };
 
-  const handleClickOpen = () => {
+  const handleSelect = (e) => {
+    setStart(e.start);
+    setNote("");
     setOpen(true);
   };
 
@@ -88,9 +76,6 @@ const Calenderespage = () => {
         (snapshot) =>
           setTodos(
             snapshot.docs.map((doc) => ({
-              // ...doc.data(),
-              // cafe_id: doc.data().cafe_id,
-              // room_id: doc.data().room_id,
               title: doc.data().note,
               start: doc.data().start,
               end: doc.data().end,
@@ -108,9 +93,9 @@ const Calenderespage = () => {
     <div style={{ margin: "0 20px 20px 20px" }}>
       {/* <h1>{addEvent}</h1> */}
       <FullCalendar
-        // schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+        schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
         ref={calendarComponentRef}
-        dateClick={handleClickOpen}
+        //dateClick={handleClickOpen}
         // dateClick={handleDateClick}
         defaultView="dayGridMonth"
         displayEventTime={true}
@@ -121,11 +106,12 @@ const Calenderespage = () => {
           timeGridPlugin,
           resourceTimeGridPlugin,
         ]}
-        // eventClick={(event) => {
-        //   alert(event.event._def.publicId);
-        // }}
+        eventClick={(event) => {
+          //console.log(event);
+          alert(event.event._def.title);
+        }}
         events={todos}
-        select={handleNew}
+        select={handleSelect}
         eventLimit={3}
       />
 
@@ -146,7 +132,7 @@ const Calenderespage = () => {
               required
               style={{ marginBottom: "20px" }}
             />
-            <TextField
+            {/* <TextField
               label="Enter Start Date YYYY-D-MM "
               type="name"
               fullWidth
@@ -154,7 +140,7 @@ const Calenderespage = () => {
               onChange={(e) => setStart(e.target.value)}
               required
               style={{ marginBottom: "20px" }}
-            />
+            /> */}
             {/* 
             <TextField
               label="Enter End Date mm-yy-dd"
@@ -167,7 +153,7 @@ const Calenderespage = () => {
             /> */}
           </DialogContent>
           <DialogActions>
-            <Button type="submit">Save</Button>
+            <Button onClick={handleNew}>Save</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </DialogActions>
         </form>

@@ -38,8 +38,8 @@ const Login = ({ history }) => {
               <div className="card-body p-0">
                 {/* Nested Row within Card Body */}
                 <div className="row">
-                  <div className="col-lg-6 d-none d-lg-block bg-login-image" />
-                  <div className="col-lg-6">
+                  {/* <div className="col-lg-6 d-none d-lg-block bg-login-image" /> */}
+                  <div className="col-lg-6 offset-lg-3">
                     <div className="p-5">
                       <div className="text-center">
                         <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
