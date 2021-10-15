@@ -32,10 +32,10 @@ import {
 const Calenderespage = () => {
   let { cafeId, roomId } = useParams();
   const [open, setOpen] = useState(false);
-  // const [EditOrDeletopen, setEditOrDeletopen] = useState(false);
   const [eventData] = useState(event);
   const [todos, setTodos] = useState(eventData);
   const [note, setNote] = useState("");
+  // const [EditOrDeletopen, setEditOrDeletopen] = useState(false);
   // const [edit, setEdit] = useState("");
   const [start, setStart] = useState("");
   const calendarComponentRef = React.createRef();
@@ -74,6 +74,21 @@ const Calenderespage = () => {
       console.log(payload);
     }
   };
+  // const handleEdit = async (id) => {
+  //   // const note = prompt("Edit Text");
+  //   const docRef = doc(db, "events", id.event._def.publicId);
+  //   if (edit !== null) {
+  //     const payload = {
+  //       edit,
+  //       start: moment(id.event._instance.range.start).format("YYYY-MM-DD"),
+  //       end: start,
+  //       cafe_id: cafeId,
+  //       room_id: roomId,
+  //     };
+  //     setDoc(docRef, payload);
+  //     console.log(payload);
+  //   }
+  // };
 
   const handleSelect = (arg) => {
     setStart(moment(arg.dateStr).format("YYYY-MM-DD"));
@@ -83,7 +98,7 @@ const Calenderespage = () => {
   // const handleSelectEdit = (arg) => {
   //   setStart(moment(arg.dateStr).format("YYYY-MM-DD"));
   //   setNote("");
-  //   setOpen(true);
+  //   setEditOrDeletopen(true);
   // };
 
   const handleClose = () => {
@@ -118,7 +133,7 @@ const Calenderespage = () => {
   );
 
   // const handleDelete = async (id) => {
-  //   await deleteDoc(doc(db, "events", id.event._def.publicId));
+  //   await deleteDoc(doc(db, "events", id));
   // };
 
   return (
@@ -138,8 +153,8 @@ const Calenderespage = () => {
         // eventClick={(event) => {
         //   alert(event.event._def.title);
         // }}
+        // eventClick={handleSelectEdit}
         eventClick={handleEdit}
-        // eventClick={(id) => handleEdit(id)}
         events={todos}
         // select={handleSelect}
         dateClick={handleSelect}
@@ -167,26 +182,26 @@ const Calenderespage = () => {
         </form>
       </Dialog>
       {/* <Dialog open={EditOrDeletopen} onClose={handleEditOrDeletClose}>
-        <DialogTitle>Add New Event</DialogTitle> */}
-      {/* <form onSubmit={handleEdit}>
-          <DialogContent>
-            <TextField
-              autoFocus
-              label="Enter your Note"
-              type="name"
-              fullWidth
-              value={edit}
-              onChange={(e) => setEdit(e.target.value)}
-              required
-              style={{ marginBottom: "20px" }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleEdit}>Save</Button> */}
-      {/* <Button onClick={() => handleDelete()}>Cancel</Button> */}
-      {/* </DialogActions>
-        </form> */}
-      {/* </Dialog> */}
+        <DialogTitle>Add New Event</DialogTitle>
+        {/* <form onSubmit={handleEdit}> */}
+      {/* <DialogContent>
+          <TextField
+            autoFocus
+            label="Enter your Note"
+            type="name"
+            fullWidth
+            value={edit}
+            onChange={(e) => setEdit(e.target.value)}
+            required
+            style={{ marginBottom: "20px" }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEdit}>Save</Button>
+          {/* <Button onClick={handleDelete}>Cancel</Button> */}
+      {/* </DialogActions> */}
+      {/* </form> */}
+      {/* </Dialog>  */}
     </div>
   );
 };
