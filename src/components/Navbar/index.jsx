@@ -1,4 +1,4 @@
-import { getAuth } from "firebase/auth";
+
 import { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import img from "../../img/undraw_profile.svg";
@@ -17,8 +17,6 @@ const Navbar = ({ history }) => {
     //eslint-disable-next-line
   }, []);
 
-  const auth = getAuth();
-  const user = auth.currentUser;
   return (
     <>
       <nav
@@ -51,9 +49,7 @@ const Navbar = ({ history }) => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                {user && user.displayName}
-              </span>
+              <span className="mr-2 d-none d-lg-inline text-gray-600 small"></span>
               <img className="img-profile rounded-circle" src={img} alt="..." />
               {/* <i
                 class="fa fa-user-circle rounded-circle"
