@@ -1,15 +1,18 @@
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import img from "../../img/undraw_profile.svg";
 
 const Navbar = ({ history }) => {
+  const [toggle, setToggle] = useState(true);
+
   const logOut = () => {
     localStorage.removeItem("token");
     history.push("/login");
   };
 
   useEffect(() => {
+    setToggle(true);
+
     const token = localStorage.getItem("token");
     if (!token) {
       history.push("/login");
@@ -33,6 +36,7 @@ const Navbar = ({ history }) => {
         <button
           id="sidebarToggleTop"
           className="btn btn-link d-md-none rounded-circle mr-3"
+          onClick={() => setToggle(!toggle)}
         >
           <i className="fa fa-bars" />
         </button>

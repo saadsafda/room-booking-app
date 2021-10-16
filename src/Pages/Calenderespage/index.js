@@ -7,8 +7,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimeGridPlugin from "@fullcalendar/resource-timegrid";
 import moment from "moment";
 
-import swal from "sweetalert";
-
 import event from "./event";
 import {
   collection,
@@ -17,7 +15,7 @@ import {
   query,
   where,
   doc,
-  setDoc,
+  // setDoc,
   deleteDoc,
 } from "firebase/firestore";
 import db from "../../firebase";
