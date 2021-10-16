@@ -9,7 +9,7 @@ import Cafe from "./Pages/Cafe1";
 import Calenderespage from "./Pages/Calenderespage";
 
 import "./css/sb-admin-2.min.css";
-import "./css/sb-admin-2.css";
+import "./css/sb-admin-2.css";  
 
 function App() {
   return (

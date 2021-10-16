@@ -1,20 +1,18 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const SideBar = () => {
-  const [toggle, setToggle] = useState(false);
+const SideBar = (props) => {
+  // const [toggle, setToggle] = useState(false);
 
-  useEffect(() => {
-    setToggle(false);
-    //eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   setToggle(false);
+  //   //eslint-disable-next-line
+  // }, []);
 
   return (
     <>
       <ul
-        className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion ${
-          toggle ? "toggled" : ""
-        }`}
+        className={props.classes}
         // className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion  "
         id="accordionSidebar"
       >
@@ -45,7 +43,7 @@ const SideBar = () => {
           <button
             className="rounded-circle border-0"
             id="sidebarToggle"
-            onClick={() => setToggle(!toggle)}
+            onClick={props.sidebarClick}
           ></button>
         </div>
         {/* Sidebar Message */}
